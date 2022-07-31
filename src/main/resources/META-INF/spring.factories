@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=com.spark.jovakinn.unsafe_starter.realizations.SparkApplicationContextInitializer

@@ -1,9 +1,9 @@
 package com.spark.jovakinn.unsafe_starter.utils;
 
 import java.beans.Introspector;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class WordsMatcher {
 
@@ -11,8 +11,8 @@ public final class WordsMatcher {
 
     public static String findAndRemoveMatchingPiecesIfExists(Set<String> options, List<String> pieces) {
         StringBuilder match = new StringBuilder(pieces.remove(0));
-        List<String> remainingOptions = new ArrayList<>(options.stream()
-                .filter(option -> option.toLowerCase().startsWith(match.toString().toLowerCase())).toList());
+        List<String> remainingOptions = options.stream()
+                .filter(option -> option.toLowerCase().startsWith(match.toString().toLowerCase())).collect(Collectors.toList());
         if (remainingOptions.isEmpty()) {
             return "";
         }

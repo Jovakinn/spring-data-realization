@@ -1,4 +1,4 @@
-package com.spark.jovakinn.sparkdata;
+package com.spark.jovakinn.sparkdata.domain;
 
 import com.spark.jovakinn.unsafe_starter.annotations.Source;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Source("data/speakers.json")
-public class Speaker {
+@Source("data/criminals.csv")
+public class Criminal {
+    private long id;
     private String name;
-    private int age;
+    private int number;
 }

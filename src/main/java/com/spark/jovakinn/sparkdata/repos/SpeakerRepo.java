@@ -1,5 +1,6 @@
-package com.spark.jovakinn.sparkdata;
+package com.spark.jovakinn.sparkdata.repos;
 
+import com.spark.jovakinn.sparkdata.domain.Speaker;
 import com.spark.jovakinn.unsafe_starter.contracts.SparkRepository;
 
 import java.util.List;

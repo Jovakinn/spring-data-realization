@@ -14,7 +14,7 @@
     <name>SparkData</name>
     <description>SparkData</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>9</java.version>
     </properties>
     <dependencies>
         <dependency>
