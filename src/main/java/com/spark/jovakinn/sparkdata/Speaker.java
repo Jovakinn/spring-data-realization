@@ -1,6 +1,6 @@
 package com.spark.jovakinn.sparkdata;
 
-import com.spark.jovakinn.starter.annotations.Source;
+import com.spark.jovakinn.unsafe_starter.annotations.Source;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

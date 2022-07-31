@@ -1,4 +1,4 @@
-package com.spark.jovakinn.starter.utils;
+package com.spark.jovakinn.unsafe_starter.utils;
 
 import java.beans.Introspector;
 import java.util.ArrayList;

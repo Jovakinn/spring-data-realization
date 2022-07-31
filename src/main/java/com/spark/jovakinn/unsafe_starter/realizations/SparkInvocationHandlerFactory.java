@@ -1,22 +1,31 @@
-package com.spark.jovakinn.starter.realizations;
+package com.spark.jovakinn.unsafe_starter.realizations;
 
-import com.spark.jovakinn.starter.annotations.Source;
-import com.spark.jovakinn.starter.annotations.Transient;
-import com.spark.jovakinn.starter.contracts.*;
-import com.spark.jovakinn.starter.utils.WordsMatcher;
+import com.spark.jovakinn.unsafe_starter.annotations.Source;
+import com.spark.jovakinn.unsafe_starter.annotations.Transient;
+import com.spark.jovakinn.unsafe_starter.contracts.*;
+import com.spark.jovakinn.unsafe_starter.utils.WordsMatcher;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
+import java.beans.Introspector;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class SparkInvocationHandlerFactory {
-    private DataExtractorResolver resolver;
-    private Map<String, TransformationSpider> spiderMap;
-    private Map<String, Finalizer> finalizerMap;
-    private ConfigurableApplicationContext context;
+    private final DataExtractorResolver resolver;
+    private final Map<String, TransformationSpider> spiderMap;
+    private final Map<String, Finalizer> finalizerMap;
+
+
+    @Setter
+    private ConfigurableApplicationContext realContext;
 
     public SparkInvocationHandler create(Class<? extends SparkRepository> sparkRepoInterface) {
         Class<?> modelClass = getModelClass(sparkRepoInterface);
@@ -36,12 +45,12 @@ public class SparkInvocationHandlerFactory {
                 if (!spiderName.isEmpty()) {
                     currentSpider = spiderMap.get(spiderName);
                 }
-                transformations.add(Objects.requireNonNull(currentSpider).getTransformation(methods));
+                transformations.add(Objects.requireNonNull(currentSpider).getTransformation(methodWords, fieldNames));
             }
             transformationChain.put(method, transformations);
             String finalizerName = "collect";
             if (methodWords.size() == 1) {
-                finalizerName = methodWords.get(0);
+                finalizerName = Introspector.decapitalize(methodWords.get(0));
             }
             method2Finalizer.put(method, finalizerMap.get(finalizerName));
         }
@@ -52,7 +61,7 @@ public class SparkInvocationHandlerFactory {
                 .dataExtractor(dataExtractor)
                 .transformationChain(transformationChain)
                 .finalizerMap(method2Finalizer)
-                .context(context)
+                .context(realContext)
                 .build();
     }
 

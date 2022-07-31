@@ -1,11 +1,13 @@
-package com.spark.jovakinn.starter.realizations;
+package com.spark.jovakinn.unsafe_starter.realizations;
 
-import com.spark.jovakinn.starter.contracts.DataExtractor;
+import com.spark.jovakinn.unsafe_starter.contracts.DataExtractor;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component("json")
 public class JsonDataExtractor implements DataExtractor {
     @Override
     public Dataset<Row> load(String pathToData, ConfigurableApplicationContext context) {

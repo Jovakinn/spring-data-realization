@@ -1,4 +1,4 @@
-package com.spark.jovakinn.starter.realizations;
+package com.spark.jovakinn.unsafe_starter.realizations;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

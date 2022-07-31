@@ -1,8 +1,8 @@
-package com.spark.jovakinn.starter.realizations;
+package com.spark.jovakinn.unsafe_starter.realizations;
 
-import com.spark.jovakinn.starter.contracts.DataExtractor;
-import com.spark.jovakinn.starter.contracts.Finalizer;
-import com.spark.jovakinn.starter.contracts.SparkTransformation;
+import com.spark.jovakinn.unsafe_starter.contracts.DataExtractor;
+import com.spark.jovakinn.unsafe_starter.contracts.Finalizer;
+import com.spark.jovakinn.unsafe_starter.contracts.SparkTransformation;
 import lombok.Builder;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -31,6 +31,6 @@ public class SparkInvocationHandler implements InvocationHandler {
             dataset = transformation.transform(dataset);
         }
         Finalizer finalizer = finalizerMap.get(method);
-        return finalizer.doAction(dataset);
+        return finalizer.doAction(dataset, modelClass);
     }
 }
