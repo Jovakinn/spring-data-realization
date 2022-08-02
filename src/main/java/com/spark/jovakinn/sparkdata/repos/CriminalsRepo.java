@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CriminalsRepo extends SparkRepository<Criminal> {
     List<Criminal> findByNumberGreaterThanOrderByNumber(int min);
-    long findByNameContainsCount(String s);
+    List<Criminal> findByNameContains(String s);
 }

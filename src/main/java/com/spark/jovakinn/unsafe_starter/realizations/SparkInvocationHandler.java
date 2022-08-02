@@ -2,6 +2,7 @@ package com.spark.jovakinn.unsafe_starter.realizations;
 
 import com.spark.jovakinn.unsafe_starter.contracts.DataExtractor;
 import com.spark.jovakinn.unsafe_starter.contracts.Finalizer;
+import com.spark.jovakinn.unsafe_starter.contracts.FinalizerPostFinalizer;
 import com.spark.jovakinn.unsafe_starter.contracts.SparkTransformation;
 import lombok.Builder;
 import org.apache.spark.sql.Dataset;
@@ -23,6 +24,7 @@ public class SparkInvocationHandler implements InvocationHandler {
     private Map<Method, List<Tuple2<SparkTransformation, List<String>>>> transformationChain;
     private Map<Method, Finalizer> finalizerMap;
     private ConfigurableApplicationContext context;
+    private FinalizerPostFinalizer finalizerPostFinalizer;
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -36,6 +38,7 @@ public class SparkInvocationHandler implements InvocationHandler {
         }
 
         Finalizer finalizer = finalizerMap.get(method);
-        return finalizer.doAction(dataset, modelClass);
+        Object retVal = finalizer.doAction(dataset, modelClass);
+        return finalizerPostFinalizer.postFinalize(retVal);
     }
 }
